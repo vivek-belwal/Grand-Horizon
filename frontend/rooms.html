@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rooms — Grand Horizon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">✦</div>
+      <div><div class="brand-name">Grand Horizon</div><div class="brand-sub">Management Suite</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html"    class="nav-item"><span class="nav-icon">⬛</span> Dashboard</a>
+      <a href="rooms.html"    class="nav-item active"><span class="nav-icon">🚪</span> Rooms</a>
+      <a href="guests.html"   class="nav-item"><span class="nav-icon">👤</span> Guests</a>
+      <a href="bookings.html" class="nav-item"><span class="nav-icon">📋</span> Bookings</a>
+      <a href="staff.html"    class="nav-item"><span class="nav-icon">👥</span> Staff</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="server-status"><span class="status-dot" id="statusDot"></span><span id="statusText">Connecting...</span></div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">☰</button>
+        <div><h1 class="page-title">Rooms</h1><p class="page-subtitle">Manage hotel rooms & availability</p></div>
+      </div>
+      <div class="topbar-right"><div class="admin-badge">Admin Panel</div></div>
+    </header>
+
+    <div class="page-body">
+      <div class="page-actions">
+        <div class="search-bar">
+          <input type="text" id="roomSearch" placeholder="Search rooms..." oninput="searchRooms()"/>
+          <select class="filter-select" id="roomFilter" onchange="filterRooms()">
+            <option value="All">All Status</option>
+            <option value="Available">Available</option>
+            <option value="Booked">Booked</option>
+            <option value="Maintenance">Maintenance</option>
+          </select>
+        </div>
+        <button class="btn btn-gold" onclick="openAddRoomModal()">+ Add Room</button>
+      </div>
+
+      <div class="full-table-card">
+        <div class="table-card-header">
+          <h2 class="table-card-title">All Rooms</h2>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Room No.</th><th>Type</th><th>Floor</th><th>Max Occ.</th>
+                <th>Price/Night</th><th>Description</th><th>Status</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="roomsTableBody">
+              <tr><td colspan="8" class="loading-cell">Loading rooms...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ROOM MODAL -->
+  <div class="modal-overlay" id="roomModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="roomModalTitle">Add New Room</h3>
+        <button class="modal-close" onclick="closeModal('roomModal')">✕</button>
+      </div>
+      <form id="roomForm">
+        <input type="hidden" id="roomId"/>
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Room Number *</label>
+              <input class="form-control" id="roomNumber" placeholder="e.g. 101" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Type *</label>
+              <select class="form-control" id="roomType" required>
+                <option value="">Select Type</option>
+                <option>Single</option><option>Double</option>
+                <option>Deluxe</option><option>Suite</option><option>Presidential</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Price Per Night (₹) *</label>
+              <input class="form-control" id="roomPrice" type="number" placeholder="e.g. 2500" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Floor *</label>
+              <input class="form-control" id="roomFloor" type="number" placeholder="e.g. 2" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Max Occupancy *</label>
+              <input class="form-control" id="roomOccupancy" type="number" placeholder="e.g. 2" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Status</label>
+              <select class="form-control" id="roomStatus">
+                <option>Available</option><option>Booked</option><option>Maintenance</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Description</label>
+              <input class="form-control" id="roomDesc" placeholder="e.g. Sea view, king bed..."/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('roomModal')">Cancel</button>
+          <button type="submit" class="btn btn-gold">Save Room</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>window.addEventListener('DOMContentLoaded', initRoomsPage);</script>
+</body>
+</html>

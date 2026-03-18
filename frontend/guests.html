@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guests — Grand Horizon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">✦</div>
+      <div><div class="brand-name">Grand Horizon</div><div class="brand-sub">Management Suite</div></div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html"    class="nav-item"><span class="nav-icon">⬛</span> Dashboard</a>
+      <a href="rooms.html"    class="nav-item"><span class="nav-icon">🚪</span> Rooms</a>
+      <a href="guests.html"   class="nav-item active"><span class="nav-icon">👤</span> Guests</a>
+      <a href="bookings.html" class="nav-item"><span class="nav-icon">📋</span> Bookings</a>
+      <a href="staff.html"    class="nav-item"><span class="nav-icon">👥</span> Staff</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="server-status"><span class="status-dot" id="statusDot"></span><span id="statusText">Connecting...</span></div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" onclick="document.getElementById('sidebar').classList.toggle('collapsed')">☰</button>
+        <div><h1 class="page-title">Guests</h1><p class="page-subtitle">Register and manage hotel guests</p></div>
+      </div>
+      <div class="topbar-right"><div class="admin-badge">Admin Panel</div></div>
+    </header>
+
+    <div class="page-body">
+      <div class="page-actions">
+        <div class="search-bar">
+          <input type="text" id="guestSearch" placeholder="Search by name, email, phone..." oninput="searchGuests()"/>
+        </div>
+        <button class="btn btn-gold" onclick="openAddGuestModal()">+ Register Guest</button>
+      </div>
+
+      <div class="full-table-card">
+        <div class="table-card-header">
+          <h2 class="table-card-title">All Guests</h2>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th><th>Full Name</th><th>Email</th><th>Phone</th>
+                <th>Nationality</th><th>ID Proof</th><th>Registered</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="guestsTableBody">
+              <tr><td colspan="8" class="loading-cell">Loading guests...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- GUEST MODAL -->
+  <div class="modal-overlay" id="guestModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="guestModalTitle">Register New Guest</h3>
+        <button class="modal-close" onclick="closeModal('guestModal')">✕</button>
+      </div>
+      <form id="guestForm">
+        <input type="hidden" id="guestId"/>
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">First Name *</label>
+              <input class="form-control" id="guestFirstName" placeholder="First name" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name *</label>
+              <input class="form-control" id="guestLastName" placeholder="Last name" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email *</label>
+              <input class="form-control" id="guestEmail" type="email" placeholder="email@example.com" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone *</label>
+              <input class="form-control" id="guestPhone" placeholder="10-digit mobile" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nationality</label>
+              <input class="form-control" id="guestNationality" placeholder="e.g. Indian"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">ID Proof</label>
+              <input class="form-control" id="guestIdProof" placeholder="e.g. Aadhaar-1234"/>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">Address</label>
+              <input class="form-control" id="guestAddress" placeholder="Full address"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeModal('guestModal')">Cancel</button>
+          <button type="submit" class="btn btn-gold">Save Guest</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>window.addEventListener('DOMContentLoaded', initGuestsPage);</script>
+</body>
+</html>

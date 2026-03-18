@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grand Horizon — Hotel Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">✦</div>
+      <div>
+        <div class="brand-name">Grand Horizon</div>
+        <div class="brand-sub">Management Suite</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="index.html"    class="nav-item active">
+        <span class="nav-icon">⬛</span> Dashboard
+      </a>
+      <a href="rooms.html"    class="nav-item">
+        <span class="nav-icon">🚪</span> Rooms
+      </a>
+      <a href="guests.html"   class="nav-item">
+        <span class="nav-icon">👤</span> Guests
+      </a>
+      <a href="bookings.html" class="nav-item">
+        <span class="nav-icon">📋</span> Bookings
+      </a>
+      <a href="staff.html"    class="nav-item">
+        <span class="nav-icon">👥</span> Staff
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="server-status">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Connecting...</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-content">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div>
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-subtitle" id="currentDate">Loading...</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="admin-badge">Admin Panel</div>
+      </div>
+    </header>
+
+    <!-- ========== STAT CARDS ========== -->
+    <section class="stats-grid">
+      <div class="stat-card" style="--delay:0.1s">
+        <div class="stat-icon rooms-icon">🚪</div>
+        <div class="stat-info">
+          <div class="stat-value" id="totalRooms">—</div>
+          <div class="stat-label">Total Rooms</div>
+        </div>
+        <div class="stat-badge available" id="availableRooms">— available</div>
+      </div>
+
+      <div class="stat-card" style="--delay:0.2s">
+        <div class="stat-icon bookings-icon">📋</div>
+        <div class="stat-info">
+          <div class="stat-value" id="totalBookings">—</div>
+          <div class="stat-label">Total Bookings</div>
+        </div>
+        <div class="stat-badge checkedin" id="activeBookings">— checked-in</div>
+      </div>
+
+      <div class="stat-card" style="--delay:0.3s">
+        <div class="stat-icon guests-icon">👤</div>
+        <div class="stat-info">
+          <div class="stat-value" id="totalGuests">—</div>
+          <div class="stat-label">Registered Guests</div>
+        </div>
+        <div class="stat-badge neutral">All time</div>
+      </div>
+
+      <div class="stat-card" style="--delay:0.4s">
+        <div class="stat-icon revenue-icon">₹</div>
+        <div class="stat-info">
+          <div class="stat-value" id="totalRevenue">—</div>
+          <div class="stat-label">Total Revenue</div>
+        </div>
+        <div class="stat-badge revenue">Payments received</div>
+      </div>
+
+      <div class="stat-card" style="--delay:0.5s">
+        <div class="stat-icon staff-icon">👥</div>
+        <div class="stat-info">
+          <div class="stat-value" id="totalStaff">—</div>
+          <div class="stat-label">Staff Members</div>
+        </div>
+        <div class="stat-badge neutral">Active team</div>
+      </div>
+
+      <div class="stat-card" style="--delay:0.6s">
+        <div class="stat-icon maint-icon">🔧</div>
+        <div class="stat-info">
+          <div class="stat-value" id="bookedRooms">—</div>
+          <div class="stat-label">Rooms Occupied</div>
+        </div>
+        <div class="stat-badge booked">Currently booked</div>
+      </div>
+    </section>
+
+    <!-- ========== TABLES ROW ========== -->
+    <section class="tables-row">
+
+      <!-- Recent Bookings -->
+      <div class="table-card">
+        <div class="table-card-header">
+          <h2 class="table-card-title">Recent Bookings</h2>
+          <a href="bookings.html" class="view-all-btn">View All →</a>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="recentBookingsTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Guest</th>
+                <th>Room</th>
+                <th>Check-In</th>
+                <th>Status</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody id="recentBookingsTbody">
+              <tr><td colspan="6" class="loading-cell">Loading bookings...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Room Availability -->
+      <div class="table-card">
+        <div class="table-card-header">
+          <h2 class="table-card-title">Room Status</h2>
+          <a href="rooms.html" class="view-all-btn">Manage →</a>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="roomsTable">
+            <thead>
+              <tr>
+                <th>Room</th>
+                <th>Type</th>
+                <th>Floor</th>
+                <th>Price/Night</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="roomsTbody">
+              <tr><td colspan="5" class="loading-cell">Loading rooms...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Set current date
+    document.getElementById('currentDate').textContent =
+      new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+    // Load dashboard on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      loadDashboard();
+      loadRecentBookings();
+      loadRoomsPreview();
+    });
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('collapsed');
+    }
+
+    async function loadDashboard() {
+      try {
+        const res  = await fetch(`${API_BASE}/dashboard`);
+        const json = await res.json();
+        if (!json.success) return;
+        const d = json.data;
+
+        document.getElementById('totalRooms').textContent    = d.totalRooms;
+        document.getElementById('totalBookings').textContent = d.totalBookings;
+        document.getElementById('totalGuests').textContent   = d.totalGuests;
+        document.getElementById('totalStaff').textContent    = d.totalStaff;
+        document.getElementById('bookedRooms').textContent   = d.bookedRooms;
+        document.getElementById('availableRooms').textContent = d.availableRooms + ' available';
+        document.getElementById('activeBookings').textContent = d.activeBookings + ' checked-in';
+        document.getElementById('totalRevenue').textContent  =
+          '₹' + Number(d.totalRevenue).toLocaleString('en-IN');
+
+        setServerStatus(true);
+      } catch (e) {
+        setServerStatus(false);
+        console.error('Dashboard load error:', e);
+      }
+    }
+
+    async function loadRecentBookings() {
+      try {
+        const res  = await fetch(`${API_BASE}/bookings`);
+        const json = await res.json();
+        const tbody = document.getElementById('recentBookingsTbody');
+        if (!json.success || !json.data.length) {
+          tbody.innerHTML = '<tr><td colspan="6" class="loading-cell">No bookings found</td></tr>';
+          return;
+        }
+        const recent = json.data.slice(0, 8);
+        tbody.innerHTML = recent.map(b => `
+          <tr>
+            <td>#${b.booking_id}</td>
+            <td>${b.guest_name}</td>
+            <td>${b.room_number}</td>
+            <td>${formatDate(b.check_in)}</td>
+            <td><span class="badge badge-${b.booking_status.toLowerCase().replace('-','')}">${b.booking_status}</span></td>
+            <td>₹${Number(b.total_amount).toLocaleString('en-IN')}</td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        document.getElementById('recentBookingsTbody').innerHTML =
+          '<tr><td colspan="6" class="loading-cell error-cell">Could not connect to server</td></tr>';
+      }
+    }
+
+    async function loadRoomsPreview() {
+      try {
+        const res  = await fetch(`${API_BASE}/rooms`);
+        const json = await res.json();
+        const tbody = document.getElementById('roomsTbody');
+        if (!json.success || !json.data.length) {
+          tbody.innerHTML = '<tr><td colspan="5" class="loading-cell">No rooms found</td></tr>';
+          return;
+        }
+        const rooms = json.data.slice(0, 8);
+        tbody.innerHTML = rooms.map(r => `
+          <tr>
+            <td><strong>${r.room_number}</strong></td>
+            <td>${r.type}</td>
+            <td>${r.floor}</td>
+            <td>₹${Number(r.price_per_night).toLocaleString('en-IN')}</td>
+            <td><span class="badge badge-${r.status.toLowerCase()}">${r.status}</span></td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        document.getElementById('roomsTbody').innerHTML =
+          '<tr><td colspan="5" class="loading-cell error-cell">Could not connect to server</td></tr>';
+      }
+    }
+  </script>
+</body>
+</html>
