@@ -221,8 +221,8 @@ const API_BASE = 'https://your-app.up.railway.app/api';
 ## 👨‍💻 Author
 
 **Your Name**
-- GitHub: [@vivek-belwal](https://github.com/vivek-belwal)
-- GitHub: [@PoisonMunna](https://github.com/PoisonMunna)
+- GitHub: [vivek-belwal](https://github.com/vivek-belwal)
+- GitHub: [PoisonMunna](https://github.com/PoisonMunna)
 
 ---
 
