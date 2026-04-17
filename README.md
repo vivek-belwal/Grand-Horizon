@@ -1,4 +1,4 @@
-# 🏨 Hotel Management System
+# 🏨 Hotel Management System 
 
 A full-stack Hotel Management System built with **Node.js**, **Express**, **MySQL**, and **HTML/CSS/JavaScript**. Manage rooms, guests, bookings, staff, and payments through a professional luxury-themed dashboard.
 
